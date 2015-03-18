@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<weblogic-jms xmlns="http://xmlns.oracle.com/weblogic/weblogic-jms" xmlns:sec="http://xmlns.oracle.com/weblogic/security" xmlns:wls="http://xmlns.oracle.com/weblogic/security/wls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-jms http://xmlns.oracle.com/weblogic/weblogic-jms/1.1/weblogic-jms.xsd">
+  <connection-factory name="DC4ConnectionFactory">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/QueueConnectionFactory</jndi-name>
+    <client-params>
+      <client-id-policy>Restricted</client-id-policy>
+      <subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+      <acknowledge-policy>All</acknowledge-policy>
+      <allow-close-in-onMessage>true</allow-close-in-onMessage>
+      <messages-maximum>10</messages-maximum>
+      <multicast-overrun-policy>KeepOld</multicast-overrun-policy>
+      <synchronous-prefetch-mode>disabled</synchronous-prefetch-mode>
+      <reconnect-policy>all</reconnect-policy>
+      <reconnect-blocking-millis>60000</reconnect-blocking-millis>
+      <total-reconnect-period-millis>-1</total-reconnect-period-millis>
+    </client-params>
+    <transaction-params>
+      <xa-connection-factory-enabled>false</xa-connection-factory-enabled>
+    </transaction-params>
+    <load-balancing-params>
+      <load-balancing-enabled>true</load-balancing-enabled>
+      <server-affinity-enabled>false</server-affinity-enabled>
+    </load-balancing-params>
+    <security-params>
+      <attach-jmsx-user-id>false</attach-jmsx-user-id>
+    </security-params>
+  </connection-factory>
+  <connection-factory name="QueueConnectionFactory2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>QueueConnectionFactory</jndi-name>
+    <client-params>
+      <client-id-policy>Restricted</client-id-policy>
+      <subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+      <acknowledge-policy>All</acknowledge-policy>
+      <allow-close-in-onMessage>true</allow-close-in-onMessage>
+      <messages-maximum>10</messages-maximum>
+      <multicast-overrun-policy>KeepOld</multicast-overrun-policy>
+      <synchronous-prefetch-mode>disabled</synchronous-prefetch-mode>
+      <reconnect-policy>all</reconnect-policy>
+      <reconnect-blocking-millis>60000</reconnect-blocking-millis>
+      <total-reconnect-period-millis>-1</total-reconnect-period-millis>
+    </client-params>
+    <transaction-params>
+      <xa-connection-factory-enabled>false</xa-connection-factory-enabled>
+    </transaction-params>
+    <load-balancing-params>
+      <load-balancing-enabled>true</load-balancing-enabled>
+      <server-affinity-enabled>false</server-affinity-enabled>
+    </load-balancing-params>
+    <security-params>
+      <attach-jmsx-user-id>false</attach-jmsx-user-id>
+    </security-params>
+  </connection-factory>
+  <connection-factory name="XAQueueConnectionFactory">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/XAQueueConnectionFactory</jndi-name>
+    <client-params>
+      <client-id-policy>Restricted</client-id-policy>
+      <subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+      <acknowledge-policy>All</acknowledge-policy>
+      <allow-close-in-onMessage>true</allow-close-in-onMessage>
+      <messages-maximum>10</messages-maximum>
+      <multicast-overrun-policy>KeepOld</multicast-overrun-policy>
+      <synchronous-prefetch-mode>disabled</synchronous-prefetch-mode>
+      <reconnect-policy>all</reconnect-policy>
+      <reconnect-blocking-millis>60000</reconnect-blocking-millis>
+      <total-reconnect-period-millis>-1</total-reconnect-period-millis>
+    </client-params>
+    <transaction-params>
+      <xa-connection-factory-enabled>true</xa-connection-factory-enabled>
+    </transaction-params>
+    <load-balancing-params>
+      <load-balancing-enabled>true</load-balancing-enabled>
+      <server-affinity-enabled>false</server-affinity-enabled>
+    </load-balancing-params>
+    <security-params>
+      <attach-jmsx-user-id>false</attach-jmsx-user-id>
+    </security-params>
+  </connection-factory>
+  <connection-factory name="WL2GFConnectionFactory">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/WL2GFConnectionFactory</jndi-name>
+    <client-params>
+      <client-id-policy>Restricted</client-id-policy>
+      <subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+      <messages-maximum>10</messages-maximum>
+    </client-params>
+    <transaction-params>
+      <xa-connection-factory-enabled>true</xa-connection-factory-enabled>
+    </transaction-params>
+    <security-params>
+      <attach-jmsx-user-id>false</attach-jmsx-user-id>
+    </security-params>
+  </connection-factory>
+  <connection-factory name="GF2WLConnectionFactory">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/GF2WLConnectionFactory</jndi-name>
+    <client-params>
+      <client-id-policy>Restricted</client-id-policy>
+      <subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+      <messages-maximum>10</messages-maximum>
+    </client-params>
+    <transaction-params>
+      <xa-connection-factory-enabled>true</xa-connection-factory-enabled>
+    </transaction-params>
+    <security-params>
+      <attach-jmsx-user-id>false</attach-jmsx-user-id>
+    </security-params>
+  </connection-factory>
+  <uniform-distributed-queue name="CACHE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/CACHE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="COMMSRV">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/COMMSRV</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="COMMSRV_FB2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/COMMSRV_FB2</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DCINPUT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DCINPUT</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DCMESSAGE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DCMESSAGE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DCNOTIFICATIONS">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DCNOTIFICATIONS</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DCRESPONSE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DCRESPONSE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DRE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DRE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DREIMPORTER">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DREIMPORTER</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ERRORHOSPITAL_QUEUE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ERRORHOSPITAL_QUEUE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="FILEBROKER_RESPONSE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/FILEBROKER_RESPONSE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="FILEBROKER_WORK">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/FILEBROKER_WORK</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="SPSTPI">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/SPSTPI</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="RETAILTPI">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/RETAILTPI</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="SUITELINK_IN">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/SUITELINK_IN</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="SUITELINK_OUT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/SUITELINK_OUT</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="UPS240">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/UPS240</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="WEBFORMS">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/WEBFORMS</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="WEBSTATUS">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/WEBSTATUS</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="XG">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/XG</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ACCUMULATOR">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ACCUMULATOR</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="PREMIUMADHOC">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/PREMIUMADHOC</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.Demo_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <attach-sender>supports</attach-sender>
+    <production-paused-at-startup>false</production-paused-at-startup>
+    <insertion-paused-at-startup>false</insertion-paused-at-startup>
+    <consumption-paused-at-startup>false</consumption-paused-at-startup>
+    <jndi-name>jms/TPI/TPIODB01/Demo_Pathway</jndi-name>
+    <default-unit-of-order>false</default-unit-of-order>
+    <saf-export-policy>All</saf-export-policy>
+    <messaging-performance-preference>25</messaging-performance-preference>
+    <unit-of-work-handling-policy>PassThrough</unit-of-work-handling-policy>
+    <incomplete-work-expiration-time>-1</incomplete-work-expiration-time>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <unit-of-order-routing>Hash</unit-of-order-routing>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.Licensed_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/Licensed_Pathway</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.Licensed852_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/Licensed852_Pathway</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.NonLicensed_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/NonLicensed_Pathway</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.NonLicensed852_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/NonLicensed852_Pathway</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.NonLicensedHistorical_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/NonLicensedHistorical_Pathway</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="RUSYNC">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/RU_ITEMSYNC</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>5</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="APPEVENT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/APP_EVENT</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="APPDATAEVENT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/APP_DATA_EVENT</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ITEM_SYNCH">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ITEM_SYNCH</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.LicensedHistorical_Pathway">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/LicensedHistorical_Pathway</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ADHOCREPORTIN">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ADHOCREPORTING</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="CATALOG_MEDIA_UPLOAD_IN">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/CATALOG_MEDIA_UPLOAD_IN</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ITEM_SPREADSHEET">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ITEM_SPREADSHEET</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="ITEM_VALIDATION">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/ITEM_VALIDATION</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="EDI_COMPLIANCE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/EDI_COMPLIANCE</jndi-name>
+    <load-balancing-policy>Round-Robin</load-balancing-policy>
+    <forward-delay>-1</forward-delay>
+    <reset-delivery-count-on-forward>true</reset-delivery-count-on-forward>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="WEBDOCUMENT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/WEBDOCUMENT</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="NAV_STAGING">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/NAV_STAGING</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="APP_PROCESS_EVENT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/APP_PROCESS_EVENT</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="TPI.TPIODB01.TPIRecovery">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/TPI/TPIODB01/TPIRecovery</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DOC_EXCHANGE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DOC_EXCHANGE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="SCHEDULED_EVENTS">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/SCHEDULED_EVENTS</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_DEADLETTEROFFICE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_DEADLETTEROFFICE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_EVENTSERVICE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_EVENTSERVICE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_REGISTERSERVICE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_REGISTERSERVICE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_RELEASESERVICE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_RELEASESERVICE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_TESTENDPOINT">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_TESTENDPOINT</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_RECEIVESERVICE">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_RECEIVESERVICE</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DHS_RECEIVESERVICE2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DHS_RECEIVESERVICE2</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="CATALOG">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/CATALOG</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="XG2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/XG2</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="CatalogQueue">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/CatalogQueue</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DRE2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DRE2</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DRE-2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="DCRESPONSE2">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/DCRESPONSE2</jndi-name>
+  </uniform-distributed-queue>
+  <uniform-distributed-queue name="COMMSRV_FB23">
+    <default-targeting-enabled>true</default-targeting-enabled>
+    <jndi-name>jms/COMMSRV_FB2-poo</jndi-name>
+  </uniform-distributed-queue>
+</weblogic-jms>

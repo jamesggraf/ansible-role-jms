@@ -1,0 +1,33 @@
+
+#Conditionally import wlstModule only when script is executed with jython
+if __name__ == '__main__': 
+    from wlstModule import *#@UnusedWildImport
+
+print 'starting the script ....'
+username = '{{ jms_admin_username }}'
+password = '{{ jms_admin_password }}'
+url='{{ jms_admin_server_url }}'
+managed_server_name='{{ jms_managed_server_name }}'
+max_message_size={{ jms_managed_server_max_message_size }}
+
+jvm_arguments='{{ jms_managed_server_jvm_arguments }}'
+
+connect(username,password,url)
+
+edit()
+startEdit()
+
+cd('/Servers/' + managed_server_name)
+set('MaxMessageSize', max_message_size)
+cd('/Servers/' + managed_server_name + '/ServerStart/' + managed_server_name)
+set('Arguments', jvm_arguments)
+
+try:
+    save()
+    activate(block="true")
+    print "script returns SUCCESS"   
+except Exception, e:
+    print e 
+    print "Error while trying to save and/or activate!!!"
+    dumpStack()
+    raise

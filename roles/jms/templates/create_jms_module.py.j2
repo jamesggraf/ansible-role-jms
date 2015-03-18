@@ -1,0 +1,38 @@
+
+#Conditionally import wlstModule only when script is executed with jython
+if __name__ == '__main__': 
+    from wlstModule import *#@UnusedWildImport
+
+print 'starting the script ....'
+username = '{{ jms_admin_username }}'
+password = '{{jms_admin_password }}'
+url='{{ jms_admin_server_url }}'
+admin_server_name='{{ jms_admin_server_name }}'
+managed_server_name='{{ jms_managed_server_name }}'
+
+jms_system_resource='{{ jms_module_system_resource_name }}'
+
+connect(username,password,url)
+
+edit()
+startEdit()
+
+cd('/Servers/'+managed_server_name)
+managedServer=cmo
+cd('/Servers/'+admin_server_name)
+adminServer=cmo
+
+cd('/')
+jmsSR = create(jms_system_resource,'JMSSystemResource')
+jmsSR.addTarget(managedServer)
+jmsSR.addTarget(adminServer)
+
+try:
+    save()
+    activate(block="true")
+    print "script returns SUCCESS"   
+except Exception, e:
+    print e 
+    print "Error while trying to save and/or activate!!!"
+    dumpStack()
+    raise 

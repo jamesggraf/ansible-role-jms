@@ -1,0 +1,27 @@
+---
+driver:
+    name: vagrant
+    network:
+      - [ "forwarded_port", { guest: 7001, host: 7001 } ]
+      - [ "forwarded_port", { guest: 8001, host: 8001 } ]
+      - [ "forwarded_port", { guest: 5556, host: 5556 } ]
+      - [ "private_network", { ip: "192.168.33.11" } ]
+
+provisioner:
+  name: ansible_playbook
+  roles_path: roles
+  hosts: kitchen-servers
+  require_ansible_repo: true
+  ansible_verbose: true
+  playbook: test/test.yml
+  extra_vars:
+    s3_key: "<%= ENV['AWS_ACCESS_KEY_ID'] %>" 
+    s3_secret: "<%= ENV['AWS_SECRET_ACCESS_KEY'] %>"
+  ansible_version: 1.8.2
+
+platforms:
+  - name: opscode-sps-ol6-6
+
+suites: 
+  - name: default
+    playbook: test/test.yml

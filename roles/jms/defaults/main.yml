@@ -1,0 +1,52 @@
+---
+# file: config/defaults/main.yml
+jms_environment: "dev"
+
+jms_oracle_home: "/home/oracle"
+jms_wl_home: "/u01/app/oracle/middleware"
+jms_working_dir: "{{ jms_oracle_home }}/config"
+jms_wls_user: "oracle"
+jms_wls_group: "oinstall"
+jms_domain_name: "{{ jms_environment }}_jms_domain"
+jms_wlst_bin_dir: "{{ jms_wl_home }}/wlserver_10.3/common/bin"
+
+jms_admin_username: "weblogic"
+jms_admin_password: "password1"
+jms_admin_server_listen_address: "hostname.corp.spscommerce.net"
+jms_admin_server_listen_port: 7001
+jms_admin_server_url: "t3://{{jms_admin_server_listen_address}}:{{jms_admin_server_listen_port}}"
+jms_admin_server_name: "AdminServer"
+
+jms_managed_server_name: "{{jms_environment}}_ManagedServer_1"
+
+jms_data_store_name: "WeblogicDataStoreDS"
+jms_data_store_jndi: "jdbc/WeblogicDataStore"
+jms_data_store_jdbc_resource_name: "WeblogicDataStoreDS"
+jms_data_store_database_name: "wlpers_primary"
+jms_data_store_database_listen_address: "{{ jms_environment }}q11"
+jms_data_store_database_listen_port: 1521
+jms_data_store_database_username: "wlpers"
+jms_data_store_database_password: "change_on_install"
+jms_data_store_database_driver: "oracle.jdbc.driver.OracleDriver"
+jms_data_store_global_transaction_protocol: "None"
+jms_data_store_test_table_name: "DUAL"
+jms_data_store_database_driver_url: "jdbc:oracle:thin:"
+jms_data_store_conn_pool_max_capacity: 100
+jms_data_store_conn_pool_reserve_timeout: 25
+
+jms_persistent_store_name: "dc_jms1_store"
+jms_persistent_store_prefix: "DC_JMS1_"
+jms_domain_jta_timeout: 3000
+
+jms_managed_server_jvm_arguments: "-Dweblogic.MaxMessageSize=300000000 -Dweblogic.Chunksize=62780 -Xms6144m -Xmx13312m"
+jms_managed_server_max_message_size: 300000000
+
+jms_jms_server_name: "jms_ManagedServer_1"
+
+jms_module_system_resource_name: "{{ jms_environment | upper() }}JMS_jmsmodule"
+
+jms_queue_configuration_file: "Q31_dc4jms_jmsmodule-jms.xml"
+jms_queue_configuration_file_destination_name: "{{jms_module_system_resource_name | lower()}}-jms.xml"
+jms_queue_configuration_destination: "/u01/app/oracle/middleware/user_projects/domains/{{ jms_domain_name }}/config/jms/{{jms_queue_configuration_file_destination_name}}"
+
+

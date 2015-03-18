@@ -1,0 +1,19 @@
+---
+- name: Create modify managed server startup script
+  template: >
+    src=modify_managed_server.py.j2
+    dest={{ jms_working_dir }}/{{ jms_domain_name }}/modify_managed_server.py
+    owner={{ jms_wls_user }}
+    group={{ jms_wls_group }}
+
+- name: Modify the managed server startup script
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ jms_working_dir }}/{{ jms_domain_name }}/modify_managed_server.py"
+  args:    
+    chdir: "{{ jms_wlst_bin_dir }}"
+
+- name: Cleanup script
+  file:
+    path: "{{ jms_working_dir }}/{{ jms_domain_name }}/modify_managed_server.py"
+    state: absent

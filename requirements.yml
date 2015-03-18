@@ -1,0 +1,21 @@
+---
+- url: s3://sps-build-deploy/ansible/jrockit-0.1.0.tgz
+  paths:
+    - from: .
+      to: roles/jrockit
+- url: s3://sps-build-deploy/ansible/weblogic-0.0.2.tgz
+  paths:
+    - from: .
+      to: roles/weblogic
+- url: s3://sps-build-deploy/ansible/olprep-0.0.2.tgz
+  paths:
+    - from: .
+      to: roles/olprep
+- url: s3://sps-build-deploy/ansible/soa-0.0.1.tgz
+  paths:
+    - from: .
+      to: roles/soa
+- url: s3://sps-build-deploy/ansible/wlconfig-0.0.7.tgz
+  paths:
+    - from: .
+      to: roles/wlconfig

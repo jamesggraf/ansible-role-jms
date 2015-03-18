@@ -1,0 +1,19 @@
+---
+- name: Create JMS module creation script
+  template: >
+    src=create_jms_module.py.j2
+    dest={{ jms_working_dir }}/{{ jms_domain_name }}/create_jms_module.py
+    owner={{ jms_wls_user }}
+    group={{ jms_wls_group }}
+
+- name: Create the JMS module
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ jms_working_dir }}/{{ jms_domain_name }}/create_jms_module.py"
+  args:    
+    chdir: "{{ jms_wlst_bin_dir }}"
+
+- name: Cleanup script
+  file:
+    path: "{{ jms_working_dir }}/{{ jms_domain_name }}/create_jms_module.py"
+    state: absent

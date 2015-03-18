@@ -1,0 +1,8 @@
+---
+- include: create_data_source.yml
+- include: create_persistent_store.yml
+- include: modify_domain.yml
+- include: modify_managed_server.yml
+- include: create_jms_server.yml
+- include: create_jms_queues.yml
+- include: create_jms_module.yml
