@@ -1,0 +1,34 @@
+---
+# file: soaconfig/tasks/start_node_manager.yml
+
+- name: create node manager init script
+  template: >
+    src=wl_nodemgr.j2
+    dest=/etc/init.d/wl_nodemgr
+    owner=root
+    group=root
+    mode=0755
+
+- name: create node manager properties
+  sudo: yes
+  sudo_user: oracle
+  shell: "./oracle_common/common/bin/setNMProps.sh"
+  args:    
+    chdir: "{{ cfg_wl_home }}"
+    creates: "{{ cfg_wl_home }}/wlserver_10.3/common/nodemanager/nodemanager.properties"
+
+- name: update node manager properties
+  lineinfile:
+    dest="{{ cfg_wl_home }}/wlserver_10.3/common/nodemanager/nodemanager.properties"
+    line="SecureListener={{ cfg_nm_use_secure_listener }}"
+    regexp="^SecureListener=.*"
+    owner={{ cfg_wls_user }}
+    state=present
+    insertafter=EOF
+    create=True
+
+- name: echo for restart
+  sudo: yes
+  sudo_user: oracle
+  shell: "/bin/echo restart node manager"
+  notify: restart node manager

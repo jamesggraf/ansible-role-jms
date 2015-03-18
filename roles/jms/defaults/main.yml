@@ -1,0 +1,60 @@
+---
+# file: config/defaults/main.yml
+cfg_is_admin: true
+cfg_product_role: "jms"
+cfg_username: "weblogic"
+cfg_password: "password1"
+
+cfg_admin_server_name: "AdminServer"
+cfg_admin_server_listen_address: "hostname.corp.spscommerce.net"
+cfg_admin_server_listen_port: 7001
+cfg_admin_server_jvm_args: "-XX:PermSize=256m -XX:MaxPermSize=512m -Xms1024m -Xmx1024m"
+
+# cfg_servers: []
+
+# cfg_machines: []
+
+# cfg_clusters: []
+
+
+# defaults
+cfg_oracle_home: "/home/oracle"
+cfg_wl_home: "/u01/app/oracle/middleware"
+cfg_working_dir: "{{ cfg_oracle_home }}/config"
+cfg_wls_user: "oracle"
+cfg_wls_group: "oinstall"
+cfg_wlst_bin_dir: "{{ cfg_wl_home }}/wlserver_10.3/common/bin"
+cfg_logging_file_count: 10
+cfg_logging_file_min_size: 5000
+cfg_logging_rotation_type: "byTime"
+cfg_logging_file_time_span: 24
+
+# Node manager
+cfg_nm_use_secure_listener: false
+
+# defaults: create_domain
+cfg_domain_name: "dev_jms_domain"
+cfg_domain_path: "{{ cfg_wl_home }}/user_projects/domains"
+cfg_full_domain_path: "{{ cfg_domain_path }}/{{cfg_domain_name}}"
+cfg_override_domain: true
+cfg_apps_path: "{{ cfg_wl_home }}/user_projects/applications"
+cfg_full_apps_path: "{{ cfg_apps_path }}/domain"
+cfg_init_logs_dir: "/u01/wl_start_logs/"
+cfg_development_mode: false
+cfg_wls_template: "{{ cfg_wl_home }}/wlserver_10.3/common/templates/domains/wls.jar"
+cfg_template_applcore: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.applcore.model.stub.11.1.1_template.jar"
+cfg_template_jrf: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/jrf_template_11.1.1.jar"
+cfg_template_wsmpm: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.wsmpm_template_11.1.1.jar"
+cfg_template_soa: "{{ cfg_wl_home }}/soa/common/templates/applications/oracle.soa_template_11.1.1.jar"
+cfg_template_em: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.em_11_1_1_0_0_template.jar"
+
+# defaults: Java
+cfg_java_vendor: "JRockit"
+cfg_java_home: "/u01/app/oracle/jrockit"
+
+# defaults: SOA Middleware
+cfg_soa_s3_bucket: 'sps-build-deploy'
+cfg_soa_base_dir: '{{ cfg_wl_home }}/soa'
+cfg_soa_media_dir: '/u01/media'
+cfg_soa_inventory_loc: '{{ cfg_oracle_home }}/oraInventory'
+cfg_b2b_s3_base: '/non-sps/oracle/b2b/'

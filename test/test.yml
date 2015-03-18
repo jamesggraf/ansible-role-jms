@@ -1,0 +1,27 @@
+- hosts: all
+  vars:
+    environment: "pre"
+  roles:
+    - { role: olprep }
+    - { role: jrockit,
+        java_version: 1.6.0_45-R28.2.7-4.1.0,
+        java_arch: x64,
+        java_s3_bucket: sps-build-deploy,
+        java_s3_base: /non-sps/oracle/java/,
+        java_user: oracle,
+        java_group: oinstall,
+        java_media_dir: /u01/media,
+        java_response_dir: jrockit,
+        java_response_basedir: /home/oracle/response,
+        java_response_file: silent.xml,
+        java_install_file: install_jrockit.sh }
+    - { role: weblogic,
+        wls_version: 1035,
+        wls_s3_bucket: sps-build-deploy,
+        wls_s3_base: /non-sps/oracle/weblogic/,
+        wls_creates_file: /u01/app/oracle/middleware/wlserver_10.3/.product.properties,
+        wls_media_dir: /u01/media,
+        wls_response_dir: weblogic,
+        wls_user: oracle,
+        wls_group: oinstall }
+    - { role: jms }

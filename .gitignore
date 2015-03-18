@@ -1,0 +1,13 @@
+build/*
+!build/.keep
+inventory/vagrant
+inventory/groups
+.vagrant/
+.kitchen/
+.tmp
+*.iml
+.idea/
+.DS_Store
+roles/jrockit
+roles/weblogic
+roles/olprep

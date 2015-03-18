@@ -1,0 +1,95 @@
+## Configure Admin server
+
+print('modifying admin server')
+domain = '{{ cfg_domain_name }}'
+username = '{{ cfg_username }}'
+password = '{{ cfg_password }}'
+full_apps_path = '{{ cfg_full_apps_path }}'
+full_domain_path = '{{ cfg_full_domain_path }}'
+admin_server_name = '{{ cfg_admin_server_name }}'
+
+def createBootPropertiesFile(directoryPath, fileName, username, password):
+  adminserverDir = File(directoryPath)
+  bool = adminserverDir.mkdirs()
+  fileNew = open(directoryPath + '/' + fileName, 'w')
+  fileNew.write('username=%s\n' % username)
+  fileNew.write('password=%s\n' % password)
+  fileNew.flush()
+  fileNew.close()
+
+def createAdminStartupPropertiesFile(directoryPath, args):
+  adminserverDir = File(directoryPath)
+  bool = adminserverDir.mkdirs()
+  fileNew=open(directoryPath + '/startup.properties', 'w')
+  args=args.replace(':', '\\:')
+  args=args.replace('=', '\\=')
+  fileNew.write('Arguments=%s\n' % args)
+  fileNew.flush()
+  fileNew.close()
+
+readDomain(full_domain_path)
+
+cd('/Servers/AdminServer')
+set('Name', admin_server_name)
+
+cd('/Servers/' + admin_server_name)
+set('ListenAddress', '{{ cfg_admin_server_listen_address }}')
+set('ListenPort', {{ cfg_admin_server_listen_port }})
+setOption( "AppDir", full_apps_path)
+
+# SSL configuration
+print('Setting up SSL')
+admin_server_ssl_enabled = {{ cfg_admin_server_ssl_enabled | default(false) }}
+cd('/Server/' + admin_server_name)
+create(admin_server_name, 'SSL')
+cd('SSL/' + admin_server_name)
+if admin_server_ssl_enabled:
+  set('Enabled', 'True')
+  set('ListenPort', {{ cfg_admin_server_ssl_listen_port | default(cfg_admin_server_listen_port+100) }})
+else:
+  set('Enabled', 'False')
+set('HostNameVerificationIgnored', 'True')
+
+# Setup server startup arguments
+print('Setup server log directory')
+admin_server_log_dir = '{{ cfg_admin_server_log_directory | default("") }}'
+if admin_server_log_dir == "":
+  admin_server_log_dir = full_domain_path + '/servers/' + admin_server_name + '/logs'
+
+print('Setup server jvm args')
+admin_server_jvm_args = '{{ cfg_admin_server_jvm_args | default("") }}'
+if admin_server_jvm_args == "":
+  admin_server_jvm_args = '-XX:PermSize=256m -XX:MaxPermSize=512m -Xms1024m -Xmx1024m -Dweblogic.Stdout=' + admin_server_log_dir + '/' + admin_server_name + '.out -Dweblogic.Stderr=' + admin_server_log_dir + '/' + admin_server_name + '_err.out'
+
+print('Create admin server start')
+cd('/Server/' + admin_server_name)
+create(admin_server_name, 'ServerStart')
+cd('ServerStart/' + admin_server_name)
+
+print('Set JVM properties')
+set('Arguments', admin_server_jvm_args)
+set('JavaVendor', '{{ cfg_java_vendor }}')
+set('JavaHome', '{{ cfg_java_home }}')
+
+# Setup admin server log output
+print('admin server log: ' + admin_server_log_dir + '/' + admin_server_name + '.log')
+cd('/Server/' + admin_server_name)
+create(admin_server_name, 'Log')
+cd('/Server/' + admin_server_name + '/Log/' + admin_server_name)
+
+print('Set admin server logging properties')
+set('FileName', admin_server_log_dir + '/' + admin_server_name + '.log')
+set('FileCount', {{ cfg_logging_file_count }})
+set('FileMinSize', {{ cfg_logging_file_min_size }})
+set('RotationType', '{{ cfg_logging_rotation_type }}')
+set('FileTimeSpan', {{ cfg_logging_file_time_span }})
+
+print('Set node manager credentials')
+cd('/SecurityConfiguration/' + domain)
+set('NodeManagerUsername', username)
+set('NodeManagerPasswordEncrypted', password)
+
+print('setting domain boot properties')
+createAdminStartupPropertiesFile(full_domain_path + '/servers/' + admin_server_name + '/data/nodemanager', admin_server_jvm_args)
+createBootPropertiesFile(full_domain_path + '/servers/' + admin_server_name + '/security', 'boot.properties', username, password)
+createBootPropertiesFile(full_domain_path + '/config/nodemanager', 'nm_password.properties', username, password)

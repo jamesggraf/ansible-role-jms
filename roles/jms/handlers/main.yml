@@ -1,0 +1,8 @@
+---
+# file: soaconfig/handlers/main.yml
+
+- name: restart node manager
+  service: name=wl_nodemgr state=restarted
+
+# - name: restart admin server
+#   service: name=wl_adminsrv state=restarted
