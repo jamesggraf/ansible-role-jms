@@ -10,12 +10,7 @@ cfg_admin_server_listen_address: "hostname.corp.spscommerce.net"
 cfg_admin_server_listen_port: 7001
 cfg_admin_server_jvm_args: "-XX:PermSize=256m -XX:MaxPermSize=512m -Xms1024m -Xmx1024m"
 
-# cfg_servers: []
-
-# cfg_machines: []
-
-# cfg_clusters: []
-
+cfg_node_manager_listen_port: 5556
 
 # defaults
 cfg_oracle_home: "/home/oracle"
@@ -23,7 +18,9 @@ cfg_wl_home: "/u01/app/oracle/middleware"
 cfg_working_dir: "{{ cfg_oracle_home }}/config"
 cfg_wls_user: "oracle"
 cfg_wls_group: "oinstall"
-cfg_wlst_bin_dir: "{{ cfg_wl_home }}/wlserver_10.3/common/bin"
+cfg_wl_server_dir: "{{ cfg_wl_home }}/wlserver_10.3"
+cfg_wlst_server_bin_dir: "{{ cfg_wl_server_dir }}/server/bin"
+cfg_wlst_bin_dir: "{{ cfg_wl_server_dir }}/common/bin"
 cfg_logging_file_count: 10
 cfg_logging_file_min_size: 5000
 cfg_logging_rotation_type: "byTime"

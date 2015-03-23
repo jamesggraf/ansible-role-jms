@@ -1,34 +1,15 @@
 ---
-# file: soaconfig/tasks/start_node_manager.yml
+# file: jms/tasks/start_node_manager.yml
 
-- name: create node manager init script
-  template: >
-    src=wl_nodemgr.j2
-    dest=/etc/init.d/wl_nodemgr
-    owner=root
-    group=root
-    mode=0755
-
-- name: create node manager properties
+# TODO: convert this to a service
+- name: start node manager
   sudo: yes
   sudo_user: oracle
-  shell: "./oracle_common/common/bin/setNMProps.sh"
+  shell: "/usr/bin/nohup ./startNodeManager.sh > {{ cfg_working_dir }}/{{ cfg_domain_name }}/startNodeManager.log &"
   args:    
-    chdir: "{{ cfg_wl_home }}"
-    creates: "{{ cfg_wl_home }}/wlserver_10.3/common/nodemanager/nodemanager.properties"
+    chdir: "{{ cfg_wlst_server_bin_dir }}"
 
-- name: update node manager properties
-  lineinfile:
-    dest="{{ cfg_wl_home }}/wlserver_10.3/common/nodemanager/nodemanager.properties"
-    line="SecureListener={{ cfg_nm_use_secure_listener }}"
-    regexp="^SecureListener=.*"
-    owner={{ cfg_wls_user }}
-    state=present
-    insertafter=EOF
-    create=True
-
-- name: echo for restart
-  sudo: yes
-  sudo_user: oracle
-  shell: "/bin/echo restart node manager"
-  notify: restart node manager
+- name: Wait for node manager to start up
+  wait_for: 
+    port: "{{ cfg_node_manager_listen_port }}"
+    delay: 5

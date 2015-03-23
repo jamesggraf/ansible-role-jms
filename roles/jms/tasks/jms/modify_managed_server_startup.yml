@@ -1,0 +1,14 @@
+---
+- name: Create modify managed server startup script
+  template: >
+    src=modify_managed_server_startup.py.j2
+    dest={{ cfg_working_dir }}/{{ cfg_domain_name }}/modify_managed_server_startup.py
+    owner={{ cfg_wls_user }}
+    group={{ cfg_wls_group }}
+
+- name: Modify the managed server startup script
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ cfg_working_dir }}/{{ cfg_domain_name }}/modify_managed_server_startup.py"
+  args:    
+    chdir: "{{ cfg_wlst_bin_dir }}"

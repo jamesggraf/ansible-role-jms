@@ -1,0 +1,14 @@
+---
+- name: Create domain jta modification script
+  template: >
+    src=modify_domain_jta.py.j2
+    dest={{ cfg_working_dir }}/{{ cfg_domain_name }}/modify_domain_jta.py
+    owner={{ cfg_wls_user }}
+    group={{ cfg_wls_group }}
+
+- name: Modify the domain jta
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ cfg_working_dir }}/{{ cfg_domain_name }}/modify_domain_jta.py"
+  args:    
+    chdir: "{{ cfg_wlst_bin_dir }}"

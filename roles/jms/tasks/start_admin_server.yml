@@ -12,7 +12,7 @@
 - name: Wait for weblogic to start up
   wait_for: 
     port: "{{cfg_admin_server_listen_port}}"
-    delay: 10
+    delay: 5
 
 - name: Wait for /console to come up
   uri: 

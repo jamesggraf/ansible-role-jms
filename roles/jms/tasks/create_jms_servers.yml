@@ -1,0 +1,12 @@
+---
+# file: jms/tasks/create_domain.yml
+
+- include: jms/create_data_source.yml
+- include: jms/create_persistent_store.yml
+- include: jms/modify_domain_jta.yml
+- include: jms/modify_message_size.yml
+- include: jms/configure_jms_servers.yml
+- include: jms/configure_jms_queues.yml
+- include: jms/modify_managed_server_startup.yml
+
+# TODO: Restart services

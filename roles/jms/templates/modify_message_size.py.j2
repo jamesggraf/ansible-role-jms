@@ -1,0 +1,19 @@
+
+#Conditionally import wlstModule only when script is executed with jython
+if __name__ == '__main__': 
+    from wlstModule import *#@UnusedWildImport
+
+print 'starting the script ....'
+username = '{{ cfg_username }}'
+password = '{{ cfg_password }}'
+url='t3://localhost:{{cfg_admin_server_listen_port}}'
+connect(username,password,url)
+
+edit()
+startEdit()
+
+cd('/Servers/new_ManagedServer_1')
+set('MaxMessageSize', 300000000)
+
+save()
+activate(block="true")

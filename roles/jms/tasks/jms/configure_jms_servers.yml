@@ -1,0 +1,14 @@
+---
+- name: Create jms server configuration script
+  template: >
+    src=configure_jms_servers.py.j2
+    dest={{ cfg_working_dir }}/{{ cfg_domain_name }}/configure_jms_servers.py
+    owner={{ cfg_wls_user }}
+    group={{ cfg_wls_group }}
+
+- name: Configure the jms servers
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ cfg_working_dir }}/{{ cfg_domain_name }}/configure_jms_servers.py"
+  args:    
+    chdir: "{{ cfg_wlst_bin_dir }}"

@@ -1,0 +1,14 @@
+---
+- name: Create persistent store creation script
+  template: >
+    src=create_persistent_store.py.j2
+    dest={{ cfg_working_dir }}/{{ cfg_domain_name }}/create_persistent_store.py
+    owner={{ cfg_wls_user }}
+    group={{ cfg_wls_group }}
+
+- name: Create the persistent store
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ cfg_working_dir }}/{{ cfg_domain_name }}/create_persistent_store.py"
+  args:    
+    chdir: "{{ cfg_wlst_bin_dir }}"
