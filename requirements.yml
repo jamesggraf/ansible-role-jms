@@ -11,3 +11,11 @@
   paths:
     - from: .
       to: roles/olprep
+- url: s3://sps-build-deploy/ansible/soa-0.0.1.tgz
+  paths:
+    - from: .
+      to: roles/soa
+- url: s3://sps-build-deploy/ansible/wlconfig-0.0.7.tgz
+  paths:
+    - from: .
+      to: roles/wlconfig

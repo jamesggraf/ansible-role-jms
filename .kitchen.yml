@@ -20,7 +20,7 @@ provisioner:
   ansible_version: 1.8.2
 
 platforms:
-  - name: sps-ol6-6
+  - name: opscode-sps-ol6-6
 
 suites: 
   - name: default

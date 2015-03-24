@@ -1,0 +1,31 @@
+
+#Conditionally import wlstModule only when script is executed with jython
+if __name__ == '__main__': 
+    from wlstModule import *#@UnusedWildImport
+
+print 'starting the script ....'
+username = '{{ jms_admin_username }}'
+password = '{{ jms_admin_password }}'
+url='{{ jms_admin_server_url }}'
+
+domain='{{ jms_domain_name }}'
+timeout_seconds={{ jms_domain_jta_timeout }}
+
+connect(username,password,url)
+
+edit()
+startEdit()
+
+readDomain(domain)
+cd('JTA/'+domain)
+set('TimeoutSeconds', timeout_seconds)
+
+try:
+    save()
+    activate(block="true")
+    print "script returns SUCCESS"   
+except Exception, e:
+    print e 
+    print "Error while trying to save and/or activate!!!"
+    dumpStack()
+    raise

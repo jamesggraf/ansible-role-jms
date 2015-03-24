@@ -1,57 +1,52 @@
 ---
 # file: config/defaults/main.yml
-cfg_is_admin: true
-cfg_product_role: "jms"
-cfg_username: "weblogic"
-cfg_password: "password1"
+jms_environment: "dev"
 
-cfg_admin_server_name: "AdminServer"
-cfg_admin_server_listen_address: "hostname.corp.spscommerce.net"
-cfg_admin_server_listen_port: 7001
-cfg_admin_server_jvm_args: "-XX:PermSize=256m -XX:MaxPermSize=512m -Xms1024m -Xmx1024m"
+jms_oracle_home: "/home/oracle"
+jms_wl_home: "/u01/app/oracle/middleware"
+jms_working_dir: "{{ jms_oracle_home }}/config"
+jms_wls_user: "oracle"
+jms_wls_group: "oinstall"
+jms_domain_name: "{{ jms_environment }}_jms_domain"
+jms_wlst_bin_dir: "{{ jms_wl_home }}/wlserver_10.3/common/bin"
 
-cfg_node_manager_listen_port: 5556
+jms_admin_username: "weblogic"
+jms_admin_password: "password1"
+jms_admin_server_listen_address: "hostname.corp.spscommerce.net"
+jms_admin_server_listen_port: 7001
+jms_admin_server_url: "t3://{{jms_admin_server_listen_address}}:{{jms_admin_server_listen_port}}"
+jms_admin_server_name: "AdminServer"
 
-# defaults
-cfg_oracle_home: "/home/oracle"
-cfg_wl_home: "/u01/app/oracle/middleware"
-cfg_working_dir: "{{ cfg_oracle_home }}/config"
-cfg_wls_user: "oracle"
-cfg_wls_group: "oinstall"
-cfg_wl_server_dir: "{{ cfg_wl_home }}/wlserver_10.3"
-cfg_wlst_server_bin_dir: "{{ cfg_wl_server_dir }}/server/bin"
-cfg_wlst_bin_dir: "{{ cfg_wl_server_dir }}/common/bin"
-cfg_logging_file_count: 10
-cfg_logging_file_min_size: 5000
-cfg_logging_rotation_type: "byTime"
-cfg_logging_file_time_span: 24
+jms_managed_server_name: "{{jms_environment}}_ManagedServer_1"
 
-# Node manager
-cfg_nm_use_secure_listener: false
+jms_data_store_name: "WeblogicDataStoreDS"
+jms_data_store_jndi: "jdbc/WeblogicDataStore"
+jms_data_store_jdbc_resource_name: "WeblogicDataStoreDS"
+jms_data_store_database_name: "wlpers_primary"
+jms_data_store_database_listen_address: "{{ jms_environment }}q11"
+jms_data_store_database_listen_port: 1521
+jms_data_store_database_username: "wlpers"
+jms_data_store_database_password: "change_on_install"
+jms_data_store_database_driver: "oracle.jdbc.driver.OracleDriver"
+jms_data_store_global_transaction_protocol: "None"
+jms_data_store_test_table_name: "DUAL"
+jms_data_store_database_driver_url: "jdbc:oracle:thin:"
+jms_data_store_conn_pool_max_capacity: 100
+jms_data_store_conn_pool_reserve_timeout: 25
 
-# defaults: create_domain
-cfg_domain_name: "dev_jms_domain"
-cfg_domain_path: "{{ cfg_wl_home }}/user_projects/domains"
-cfg_full_domain_path: "{{ cfg_domain_path }}/{{cfg_domain_name}}"
-cfg_override_domain: true
-cfg_apps_path: "{{ cfg_wl_home }}/user_projects/applications"
-cfg_full_apps_path: "{{ cfg_apps_path }}/domain"
-cfg_init_logs_dir: "/u01/wl_start_logs/"
-cfg_development_mode: false
-cfg_wls_template: "{{ cfg_wl_home }}/wlserver_10.3/common/templates/domains/wls.jar"
-cfg_template_applcore: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.applcore.model.stub.11.1.1_template.jar"
-cfg_template_jrf: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/jrf_template_11.1.1.jar"
-cfg_template_wsmpm: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.wsmpm_template_11.1.1.jar"
-cfg_template_soa: "{{ cfg_wl_home }}/soa/common/templates/applications/oracle.soa_template_11.1.1.jar"
-cfg_template_em: "{{ cfg_wl_home }}/oracle_common/common/templates/applications/oracle.em_11_1_1_0_0_template.jar"
+jms_persistent_store_name: "dc_jms1_store"
+jms_persistent_store_prefix: "DC_JMS1_"
+jms_domain_jta_timeout: 3000
 
-# defaults: Java
-cfg_java_vendor: "JRockit"
-cfg_java_home: "/u01/app/oracle/jrockit"
+jms_managed_server_jvm_arguments: "-Dweblogic.MaxMessageSize=300000000 -Dweblogic.Chunksize=62780 -Xms6144m -Xmx13312m"
+jms_managed_server_max_message_size: 300000000
 
-# defaults: SOA Middleware
-cfg_soa_s3_bucket: 'sps-build-deploy'
-cfg_soa_base_dir: '{{ cfg_wl_home }}/soa'
-cfg_soa_media_dir: '/u01/media'
-cfg_soa_inventory_loc: '{{ cfg_oracle_home }}/oraInventory'
-cfg_b2b_s3_base: '/non-sps/oracle/b2b/'
+jms_jms_server_name: "jms_ManagedServer_1"
+
+jms_module_system_resource_name: "{{ jms_environment | upper() }}JMS_jmsmodule"
+
+jms_queue_configuration_file: "Q31_dc4jms_jmsmodule-jms.xml"
+jms_queue_configuration_file_destination_name: "{{jms_module_system_resource_name | lower()}}-jms.xml"
+jms_queue_configuration_destination: "/u01/app/oracle/middleware/user_projects/domains/{{ jms_domain_name }}/config/jms/{{jms_queue_configuration_file_destination_name}}"
+
+

@@ -1,6 +1,4 @@
 - hosts: all
-  vars:
-    environment: "pre"
   roles:
     - { role: olprep }
     - { role: jrockit,
@@ -24,4 +22,43 @@
         wls_response_dir: weblogic,
         wls_user: oracle,
         wls_group: oinstall }
-    - { role: jms }
+    - { role: soa,
+        soa_version: 11.1.1.4.0,
+        soa_response_basedir: /home/oracle/response,
+        soa_response_dir: soa,
+        soa_response_file: soa11g_wls.rsp,
+        soa_user: oracle,
+        soa_group: oinstall,
+        soa_media_dir: /u01/media,
+        soa_java: /u01/app/oracle/jrockit,
+        soa_inventory_loc: '/home/oracle/oraInventory',
+        orainstloc: oraInst.loc,
+        soa_creates_file: /u01/app/oracle/middleware/soa }
+    - { role: wlconfig,
+        cfg_is_admin: true,
+        cfg_username: "weblogic",
+        cfg_password: "password1",
+        cfg_domain_name: "dev_jms_domain",
+        cfg_admin_server_listen_address: "192.168.33.11",
+        cfg_admin_server_listen_port: 7001,
+        cfg_servers: [
+          {
+            name: "dev_ManagedServer_1",
+            listen_address: "192.168.33.11",
+            listen_port: 8001
+          }
+        ],
+        cfg_db_hostname: "192.168.33.10",
+        cfg_db_port: 1521,
+        cfg_db_dbms_name: "scratch",
+        cfg_db_dbuser_prefix: "B2BAWS",
+        cfg_db_schema_password: "change_on_install",
+        cfg_db_sys_password: "change_on_install" }
+    - { role: jms,
+        jms_data_store_database_name: "scratch",
+        jms_data_store_host_name: "127.0.0.1",
+        jms_data_store_database_username: "system",
+        jms_data_store_database_password: "change_on_install",
+        jms_data_store_database_listen_address: "192.168.33.10",
+        jms_admin_server_listen_address: "192.168.33.11",
+        jms_managed_server_jvm_arguments: "-Dweblogic.MaxMessageSize=300000000 -Dweblogic.Chunksize=62780 -Xms256m -Xmx1024m" }

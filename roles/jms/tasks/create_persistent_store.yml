@@ -1,0 +1,19 @@
+---
+- name: Create persistent store creation script
+  template: >
+    src=create_persistent_store.py.j2
+    dest={{ jms_working_dir }}/{{ jms_domain_name }}/create_persistent_store.py
+    owner={{ jms_wls_user }}
+    group={{ jms_wls_group }}
+
+- name: Create the persistent store
+  sudo: yes
+  sudo_user: oracle
+  command: "./wlst.sh {{ jms_working_dir }}/{{ jms_domain_name }}/create_persistent_store.py"
+  args:    
+    chdir: "{{ jms_wlst_bin_dir }}"
+
+- name: Cleanup script
+  file:
+    path: "{{ jms_working_dir }}/{{ jms_domain_name }}/create_persistent_store.py"
+    state: absent

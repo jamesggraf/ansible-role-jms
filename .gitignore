@@ -11,3 +11,5 @@ inventory/groups
 roles/jrockit
 roles/weblogic
 roles/olprep
+roles/wlconfig
+roles/soa

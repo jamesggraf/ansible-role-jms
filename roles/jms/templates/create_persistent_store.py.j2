@@ -7,31 +7,26 @@ print 'starting the script ....'
 username = '{{ jms_admin_username }}'
 password = '{{ jms_admin_password }}'
 url='{{ jms_admin_server_url }}'
-admin_server_name='{{ jms_admin_server_name }}'
 managed_server_name='{{ jms_managed_server_name }}'
 
+ds_name='{{ jms_data_store_name }}'
 persistent_store_name='{{ jms_persistent_store_name }}'
-
-jms_server_name='{{ jms_jms_server_name }}'
+prefix='{{ jms_persistent_store_prefix }}'
 
 connect(username,password,url)
 
 edit()
 startEdit()
 
-servermb=getMBean('Servers/' + admin_server_name)
-if servermb is None:
-    print 'Missing Admin Server'
+cd('/')
+jdbcStore = cmo.createJDBCStore(persistent_store_name)
+cd('/JDBCStores/'+persistent_store_name)
+cmo.setDataSource(getMBean('/SystemResources/'+ds_name))
+cmo.setPrefixName(prefix)
 
-else:
-    jmsserver = create(jms_server_name,'JMSServer')
-    cd('/Servers/'+managed_server_name)
-    managedServer=cmo
-    jmsserver.addTarget(managedServer)
-    
-    cd('/JDBCStores/'+persistent_store_name)
-    jmsserver.setPersistentStore(cmo)
-    
+cd('/Servers/'+managed_server_name)
+jdbcStore.addTarget(cmo)
+
 try:
     save()
     activate(block="true")

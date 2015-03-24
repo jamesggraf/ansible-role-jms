@@ -1,0 +1,74 @@
+
+if __name__ == '__main__': 
+    from wlstModule import *#@UnusedWildImport
+
+print 'starting the script ....'
+username = '{{ jms_admin_username }}'
+password = '{{ jms_admin_password }}'
+url='{{ jms_admin_server_url }}'
+admin_server_name='{{ jms_admin_server_name }}'
+managed_server_name='{{ jms_managed_server_name }}'
+
+ds_name='{{ jms_data_store_name }}'
+dsjndi='{{ jms_data_store_jndi }}'
+
+jdbc_resource_name='{{ jms_data_store_jdbc_resource_name }}'
+database_name='{{ jms_data_store_database_name }}'
+database_listen_address='{{ jms_data_store_database_listen_address }}'
+database_listen_port='{{ jms_data_store_database_listen_port }}'
+database_username='{{ jms_data_store_database_username }}'
+database_password='{{ jms_data_store_database_password }}'
+database_driver='{{ jms_data_store_database_driver }}'
+database_test_table='{{ jms_data_store_test_table_name }}'
+database_global_transaction_protocol='{{ jms_data_store_global_transaction_protocol }}'
+database_driver_url='{{ jms_data_store_database_driver_url }}'
+connection_pool_max_capacity={{ jms_data_store_conn_pool_max_capacity }}
+connection_pool_reserve_timeout={{ jms_data_store_conn_pool_reserve_timeout }}
+
+connect(username,password,url)
+
+edit()
+startEdit()
+
+# start creation
+print 'Creating JDBCSystemResource with name '+ds_name
+jdbcSR = create(ds_name,"JDBCSystemResource")
+jdbcResource = jdbcSR.getJDBCResource()
+jdbcResource.setName(jdbc_resource_name)
+dsParams = jdbcResource.getJDBCDataSourceParams()
+dsParams.setGlobalTransactionsProtocol(database_global_transaction_protocol)
+
+connectionPoolParams = jdbcResource.getJDBCConnectionPoolParams()
+connectionPoolParams.setConnectionReserveTimeoutSeconds(connection_pool_reserve_timeout)
+connectionPoolParams.setMaxCapacity(connection_pool_max_capacity)
+connectionPoolParams.setTestTableName(database_test_table)
+
+dsParams = jdbcResource.getJDBCDataSourceParams()
+dsParams.addJNDIName(dsjndi)
+
+driverParams = jdbcResource.getJDBCDriverParams()
+driverParams.setUrl(database_driver_url + "@" + database_listen_address + ":" + database_listen_port + "/" + database_name)
+driverParams.setDriverName(database_driver)
+
+driverParams.setPassword(database_password)
+driverProperties = driverParams.getProperties()
+
+proper = driverProperties.createProperty("user")
+proper.setValue(database_username)
+
+# Add the Admin server and managed servers as targets for this datasource
+cd('Servers/'+admin_server_name)
+jdbcSR.addTarget(cmo)
+cd('../../Servers/'+managed_server_name)
+jdbcSR.addTarget(cmo)
+cd('../..')
+
+try:
+    save()
+    activate(block="true")
+    print 'Done configuring the data source'
+except Exception, e:
+    print e 
+    print "Error while trying to save and/or activate!!!"
+    dumpStack()
+    raise

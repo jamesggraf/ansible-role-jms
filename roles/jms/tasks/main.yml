@@ -1,32 +1,8 @@
 ---
-# file:jms/tasks/main.yml
-# - name: Ensure boto is installed
-#   yum: >
-#     name=python-boto
-#     state=present
-
-# - name: Create config working directories
-#   file: >
-#     path={{ item.path }}
-#     owner={{ cfg_wls_user }}
-#     group={{ cfg_wls_group }}
-#     mode=0755
-#     state=directory
-#   with_items:
-#     - { path: "{{ cfg_init_logs_dir }}" }
-#     - { path: "{{ cfg_working_dir }}" }
-#     - { path: "{{ cfg_working_dir }}/{{ cfg_domain_name }}" }
-
-# - include: create_domain.yml
-#   when: cfg_is_admin
-# - include: configure_admin_server.yml
-#   when: cfg_is_admin
-
-# # - include: start_admin_server.yml
-# #   when: cfg_is_admin
-# # - include: copy_domain.yml
-# #   when: cfg_is_admin
-
-# - include: start_admin_server.yml
-# - include: start_node_manager.yml
-- include: create_jms_servers.yml
+- include: create_data_source.yml
+- include: create_persistent_store.yml
+- include: modify_domain.yml
+- include: modify_managed_server.yml
+- include: create_jms_server.yml
+- include: create_jms_queues.yml
+- include: create_jms_module.yml

@@ -1,0 +1,7 @@
+---
+- name: Copy the JMS queue configuration to WL
+  sudo: yes
+  sudo_user: oracle
+  synchronize:
+    src: "roles/jms/files/{{ jms_queue_configuration_file }}"
+    dest: "{{ jms_queue_configuration_destination }}"

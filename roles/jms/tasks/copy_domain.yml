@@ -1,9 +1,0 @@
----
-# file: jms/tasks/copy_domain.yml
-- name: pack domain template
-  sudo: yes
-  sudo_user: oracle
-  shell: "./soa/common/bin/pack.sh -managed=true -domain={{ cfg_domain_path }}/{{ cfg_domain_name }}/ -template={{ cfg_domain_name }}_template.jar -template_name={{ cfg_domain_name }}_template"
-  args:    
-    chdir: "{{ cfg_wl_home }}"
-    creates: "{{ cfg_wl_home }}/{{ cfg_domain_name }}_template.jar"
